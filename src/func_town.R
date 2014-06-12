@@ -3,6 +3,35 @@
 ### 17 Mar 2014
 ### MK Lau
 
+###Network figs
+joePpd <- function(x){
+                                        #data pre-processing
+  rownames(x) <- x[,1]
+  x <- x[,-1]
+  x[upper.tri(x)] <- t(x)[upper.tri(x)]
+  diag(x) <- 0
+  as.matrix(x)
+}
+
+joePlot <- function(x,y,coord,v.col,v.cex){
+                                        #plots
+  if (missing(v.cex)){v.cex <- 1}
+  if (missing(v.col)){v.col <- rep('grey',nrow(x))}
+  if (missing(coord)){
+    x. <- x
+    x.[y!=2] <- 0    
+    e.lwd <- log(abs(x)*10);e.lwd[y==2] <- e.lwd[y==2]*7;e.lwd[y==1] <- e.lwd[y==1]*0.5;e.lwd[y==0] <- e.lwd[y==0]*0.1
+    e.lty <- x;e.lty[x>0] <- 1;e.lty[x<0] <- 2
+    coord <- gplot(abs(x),gmode='graph',displaylabels=TRUE,edge.lwd=e.lwd,vertex.col=v.col,vertex.cex=v.cex,vertex.border='white',edge.lty=e.lty,label.bg='white',boxed.labels=TRUE,label.border=0,mode='circle')
+    coord}else{
+      x. <- x
+      x.[y!=2] <- 0   
+      e.lwd <- log(abs(x)*10);e.lwd[y==2] <- e.lwd[y==2]*7;e.lwd[y==1] <- e.lwd[y==1]*0.5;e.lwd[y==0] <- e.lwd[y==0]*0.1
+      e.lty <- x;e.lty[x>0] <- 1;e.lty[x<0] <- 2
+      coord <- gplot(abs(x),gmode='graph',displaylabels=TRUE,edge.lwd=e.lwd,vertex.col=v.col,vertex.cex=v.cex,vertex.border='white',edge.lty=e.lty,label.bg='white',boxed.labels=TRUE,label.border=0,coord=coord,mode='circle')
+    }
+}
+
 ### matrix = community matrices
 ### factor = genotype vector
 ### names = tree names

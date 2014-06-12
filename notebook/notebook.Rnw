@@ -34,6 +34,44 @@
 %\setcounter{secnumdepth}{-1}  %activate to start numbering from one
 %on the second page
 
+\section{12 June 2014}
+Use the Pairwise... excel file. 
+
+\begin{verbatim}
+
+Hey, thanks for the input.  I will incorporate it and plan to send out
+another draft, this time to everyone, by the end of this weekend. One
+thing we need to keep in mind with all of this (and I have to
+continually remind Tom this too) is that the correlations could also
+be due to shared underlying influences of genes or correlated genes
+(i.e., pleiotrophy and linkage disequilibrium) and not interactions.
+
+Attached are updated matrices for raw mantels among communities and
+ones done with relativization. Could you make a new network figure for
+each?  The bold+italicize are P less than or equal to 0.05 and the
+ones only bolded are P is less than 1 and greater than 0.05. This
+time, I think it would be nice to make the significant ones have black
+lines, the marginal have dark grey lines and the insigificant ones
+still be in the fig but have super light grey connections.  Just make
+each network a different pdf and I can put them together in final
+form. Also, Todd's webs suck.
+
+One more task. The comparison of the raw to the relativized values
+represents a test of one of Tom's hypotheses. So, I would like to
+actually do a test, in addition to qualitatively comparing them. I
+think this could be done by unfolding the matrices and performing a
+paired t-test using a randomization procedure to get the p-value.
+Could you do that?
+
+Thanks
+Jamie
+\end{verbatim}
+
+\section{06 June 2014}
+
+Looking into analyses and visualzations of the relationships among
+communities via the partial mantel coefficients.
+
 
 \section{27 Mar 2014}
 <<>>=
