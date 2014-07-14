@@ -4,6 +4,11 @@
 ### MK Lau
 
 ###Network figs
+joeLabels <- function(coord,labels){
+  labels
+  
+}
+
 joePpd <- function(x){
                                         #data pre-processing
   rownames(x) <- x[,1]
@@ -17,19 +22,33 @@ joePlot <- function(x,y,coord,v.col,v.cex){
                                         #plots
   if (missing(v.cex)){v.cex <- 1}
   if (missing(v.col)){v.col <- rep('grey',nrow(x))}
-  if (missing(coord)){
-    x. <- x
-    x.[y!=2] <- 0    
-    e.lwd <- log(abs(x)*10);e.lwd[y==2] <- e.lwd[y==2]*7;e.lwd[y==1] <- e.lwd[y==1]*0.5;e.lwd[y==0] <- e.lwd[y==0]*0.1
-    e.lty <- x;e.lty[x>0] <- 1;e.lty[x<0] <- 2
-    coord <- gplot(abs(x),gmode='graph',displaylabels=TRUE,edge.lwd=e.lwd,vertex.col=v.col,vertex.cex=v.cex,vertex.border='white',edge.lty=e.lty,label.bg='white',boxed.labels=TRUE,label.border=0,mode='circle')
-    coord}else{
-      x. <- x
-      x.[y!=2] <- 0   
-      e.lwd <- log(abs(x)*10);e.lwd[y==2] <- e.lwd[y==2]*7;e.lwd[y==1] <- e.lwd[y==1]*0.5;e.lwd[y==0] <- e.lwd[y==0]*0.1
-      e.lty <- x;e.lty[x>0] <- 1;e.lty[x<0] <- 2
-      coord <- gplot(abs(x),gmode='graph',displaylabels=TRUE,edge.lwd=e.lwd,vertex.col=v.col,vertex.cex=v.cex,vertex.border='white',edge.lty=e.lty,label.bg='white',boxed.labels=TRUE,label.border=0,coord=coord,mode='circle')
-    }
+  x. <- x.. <- x... <- x
+  x.[y!=2] <- 0    
+  x..[y!=1] <- 0
+  x...[y!=0] <- 0
+  e.lwd <- sqrt(abs(x)*100)
+  e.col <- y;e.col[y==2] <- 'white';e.col[y==1] <- 'grey';e.col[y==0&x!=0] <- grey(0.95);e.col[e.col=="0"] <- "white"
+  set.seed(0)
+  coord <- gplot((x...),gmode='graph',displaylabels=FALSE,edge.lwd=e.lwd,
+        vertex.col=0,vertex.cex=v.cex,vertex.border='white',
+        label.bg='white',boxed.labels=TRUE,
+        label.border=0,mode='circle',edge.col=e.col,
+        edge.lty=1,edge.lty.n=2)
+  set.seed(0)
+  gplot((x..),gmode='graph',displaylabels=FALSE,edge.lwd=e.lwd,
+        vertex.col=v.col,vertex.cex=v.cex,vertex.border='white',
+        label.bg='white',boxed.labels=TRUE,
+        label.border=0,mode='circle',
+        edge.col='grey',new=FALSE,coord=coord,
+        edge.lty=1,edge.lty.n=2)
+  set.seed(0)
+  gplot((x.),gmode='graph',displaylabels=FALSE,edge.lwd=e.lwd,
+        vertex.col=v.col,vertex.cex=v.cex*2,vertex.border='white',
+        label.bg='white',boxed.labels=TRUE,
+        label.border=0,mode='circle',
+        edge.col=1,new=FALSE,coord=coord,
+        edge.lty=1,edge.lty.n=2)
+  coord
 }
 
 ### matrix = community matrices
