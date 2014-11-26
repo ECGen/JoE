@@ -1,6 +1,7 @@
 ###JoE manuscript analysis
 ###MKLau 2may2014
 library(sna)
+library('RColorBrewer')
 source('../src/func_town.R')
                                         #data pre-processing
 r <- joePpd(read.csv('../data/joe_pwr_raw.csv'))[c(5,2,3,4,1,6,7,8,9),c(5,2,3,4,1,6,7,8,9)]
@@ -12,16 +13,16 @@ rs <- rs[rownames(rs)!='TreeWebs.09',colnames(rs)!='TreeWebs.09']
 m <- m[rownames(m)!='TreeWebs.09',colnames(m)!='TreeWebs.09']
 ms <- ms[rownames(ms)!='TreeWebs.09',colnames(ms)!='TreeWebs.09']
                                         #plot
-v.col <- c("darkgrey","brown","brown","brown","green","green","green","green")
+v.col <- c(grey(0.25),"#8C2D04","#8C2D04","#8C2D04","green","green","green","green")
 
 new.coord <- FALSE
 if (new.coord){coord <- locator(nrow(r));dput(coord,file='../data/coords.rdata')}else{
 coord <- dget(file='../data/coords.rdata')}
 par(family='Times')
-labels <- c('Lichen 2010','EM Fungi 2006','Soil Bacteria 2004','Soil Fungi 2004','Endophytes 2006','Leaf Modifiers 2010','Leaf Pathogens 2009','Leaf Pathogens 2010')
+labels <- c('Epiphytic Lichen 2010','EM Fungi 2006','Soil Bacteria 2004','Soil Fungi 2004','Endophytes 2006','Leaf Modifiers 2010','Leaf Pathogens 2009','Leaf Pathogens 2010')
 joePlot(abs(r),rs,v.col=v.col,v.cex=1)
 text(x=coord$x,y=coord$y,labels=labels)
-legend('topleft',legend=c(expression(italic('P')<=0.05),expression(paste('0.05 < ',italic('P'),' < ','0.1')),expression(italic('P')>=0.1),'','Phyllosphere','Trunk','Soil'),pch=c(15,15,22,15,19,19,19),col=c('black','darkgrey',grey(0.50),0,'green','darkgrey','brown'),cex=1,box.lwd=0.5)
+legend('topright',legend=c(expression(italic('P')<=0.05),expression(paste('0.05 < ',italic('P'),' < ','0.1')),expression(italic('P')>=0.1),'','Phyllosphere','Trunk','Soil'),pch=c(15,15,15,15,19,19,19),col=c('black','darkgrey',grey(0.85),0,'green',grey(0.25),"#8C2D04"),cex=1,box.lwd=1,box.col='grey')
 joePlot(abs(m),ms,v.col=v.col,v.cex=1)
 text(x=coord$x,y=coord$y,labels=labels)
 
