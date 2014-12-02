@@ -13,19 +13,34 @@ rs <- rs[rownames(rs)!='TreeWebs.09',colnames(rs)!='TreeWebs.09']
 m <- m[rownames(m)!='TreeWebs.09',colnames(m)!='TreeWebs.09']
 ms <- ms[rownames(ms)!='TreeWebs.09',colnames(ms)!='TreeWebs.09']
                                         #plot
-v.col <- c(grey(0.25),"#8C2D04","#8C2D04","#8C2D04","green","green","green","green")
+v.col <- c(grey(0.25),rep("#662506",3),rep("#254C00",4))
 
 new.coord <- FALSE
 if (new.coord){coord <- locator(nrow(r));dput(coord,file='../data/coords.rdata')}else{
 coord <- dget(file='../data/coords.rdata')}
-par(family='Times')
-labels <- c('Epiphytic Lichen 2010','EM Fungi 2006','Soil Bacteria 2004','Soil Fungi 2004','Endophytes 2006','Leaf Modifiers 2010','Leaf Pathogens 2009','Leaf Pathogens 2010')
+coord$y[1] <- 1.27281660
+coord$x[7] <- -1.45703700
+labels <- c('Epiphytic Lichens 2010','Ectomycorrhizal Fungi 2006','Soil Bacteria 2004','Soil Fungi 2004','Twig Endophytes 2006','Leaf/Stem Modifying Arthropods 2010','Pathogens 2009','Pathogens 2010')
+###
+pdf(file='~/projects/JoE/results/netFig2a.pdf',width=10,height=6.5)
+par(family='Times',mai=rep(0,4))
 joePlot(abs(r),rs,v.col=v.col,v.cex=1)
-text(x=coord$x,y=coord$y,labels=labels)
-legend('topright',legend=c(expression(italic('P')<=0.05),expression(paste('0.05 < ',italic('P'),' < ','0.1')),expression(italic('P')>=0.1),'','Phyllosphere','Trunk','Soil'),pch=c(15,15,15,15,19,19,19),col=c('black','darkgrey',grey(0.85),0,'green',grey(0.25),"#8C2D04"),cex=1,box.lwd=1,box.col='grey')
+text(x=c(-1.457897,-1.034757),y=c(0.0765118,1.084242),labels='Fungal Leaf',cex=1.25)
+text(x=coord$x,y=coord$y,labels=labels,cex=1.25)
+legend('topleft',legend='A',bty='n',cex=2.5)
+dev.off()
+pdf(file='~/projects/JoE/results/netFig2b.pdf',width=10,height=6.5)
+par(family='Times',mai=rep(0,4))
 joePlot(abs(m),ms,v.col=v.col,v.cex=1)
-text(x=coord$x,y=coord$y,labels=labels)
-
+text(x=c(-1.457897,-1.034757),y=c(0.0765118,1.084242),labels='Fungal Leaf',cex=1.25)
+text(x=coord$x,y=coord$y,labels=labels,cex=1.25)
+legend('topleft',legend='B',bty='n',cex=2.5)
+dev.off()
+pdf(file='~/projects/JoE/results/netFig2L.pdf')
+par(family='Times',mai=rep(0,4))
+plot(1:10,pch='',xaxt='n',yaxt='n',bty='n',xlab='',ylab='')
+legend('center',legend=c(expression(italic('P')<=0.05),expression(paste('0.05 < ',italic('P'),' < ','0.1')),expression(italic('P')>=0.1),'','Phyllosphere','Trunk','Soil'),pch=c(15,15,15,15,19,19,19),col=c('black',grey(0.5),grey(0.85),0,'#254C00',grey(0.25),"#662506"),cex=3,box.lwd=1,box.col='grey')
+dev.off()
 
 ###Analytics for network
 r. <- r;r.[rs!=2] <- 0;m. <- m;m.[ms!=2] <- 0

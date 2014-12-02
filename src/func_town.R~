@@ -4,11 +4,6 @@
 ### MK Lau
 
 ###Network figs
-joeLabels <- function(coord,labels){
-  labels
-  
-}
-
 joePpd <- function(x){
                                         #data pre-processing
   rownames(x) <- x[,1]
@@ -18,7 +13,7 @@ joePpd <- function(x){
   as.matrix(x)
 }
 
-joePlot <- function(x,y,coord,v.col,v.cex){
+joePlot <- function(x,y,coord='coordinates',v.col,v.cex){
                                         #plots
   if (missing(v.cex)){v.cex <- 1}
   if (missing(v.col)){v.col <- rep('grey',nrow(x))}
@@ -29,11 +24,19 @@ joePlot <- function(x,y,coord,v.col,v.cex){
   e.lwd <- sqrt(abs(x)*100)
   e.col <- y;e.col[y==2] <- 'white';e.col[y==1] <- 'grey';e.col[y==0&x!=0] <- grey(0.95);e.col[e.col=="0"] <- "white"
   set.seed(0)
-  coord <- gplot((x...),gmode='graph',displaylabels=FALSE,edge.lwd=e.lwd,
+  if (coord=='coordinates'&is.list(coord)){
+    gplot((x...),gmode='graph',displaylabels=FALSE,edge.lwd=e.lwd,
         vertex.col=0,vertex.cex=v.cex,vertex.border='white',
         label.bg='white',boxed.labels=TRUE,
         label.border=0,mode='circle',edge.col=e.col,
         edge.lty=1,edge.lty.n=2)
+  }else{
+    coord <- gplot((x...),gmode='graph',displaylabels=FALSE,edge.lwd=e.lwd,
+                   vertex.col=0,vertex.cex=v.cex,vertex.border='white',
+                   label.bg='white',boxed.labels=TRUE,
+                   label.border=0,mode='circle',edge.col=e.col,
+                   edge.lty=1,edge.lty.n=2)
+  }
   set.seed(0)
   gplot((x..),gmode='graph',displaylabels=FALSE,edge.lwd=e.lwd,
         vertex.col=v.col,vertex.cex=v.cex,vertex.border='white',
