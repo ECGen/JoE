@@ -4,14 +4,16 @@ library(sna)
 library('RColorBrewer')
 source('../src/func_town.R')
                                         #data pre-processing
-r <- joePpd(read.csv('../data/joe_pwr_raw.csv'))[c(5,2,3,4,1,6,7,8,9),c(5,2,3,4,1,6,7,8,9)]
-rs <- joePpd(read.csv('../data/joe_pwr_raw_sig.csv'))[c(5,2,3,4,1,6,7,8,9),c(5,2,3,4,1,6,7,8,9)]
-m <- joePpd(read.csv('../data/joe_pwr_max.csv'))[c(5,2,3,4,1,6,7,8,9),c(5,2,3,4,1,6,7,8,9)]
-ms <- joePpd(read.csv('../data/joe_pwr_max_sig.csv'))[c(5,2,3,4,1,6,7,8,9),c(5,2,3,4,1,6,7,8,9)]
+r <- joePpd(read.csv('../data/joe_pwr_raw.csv'))[c(6,2,3,4,1,6,7,8),c(6,2,3,4,1,6,7,8)]
+rs <- joePpd(read.csv('../data/joe_pwr_raw_sig.csv'))[c(6,2,3,4,1,6,7,8),c(6,2,3,4,1,6,7,8)]
+m <- joePpd(read.csv('../data/joe_pwr_max.csv'))[c(6,2,3,4,1,6,7,8),c(6,2,3,4,1,6,7,8)]
+ms <- joePpd(read.csv('../data/joe_pwr_max_sig.csv'))[c(6,2,3,4,1,6,7,8),c(6,2,3,4,1,6,7,8)]
 r <- r[rownames(r)!='TreeWebs.09',colnames(r)!='TreeWebs.09']
 rs <- rs[rownames(rs)!='TreeWebs.09',colnames(rs)!='TreeWebs.09']
 m <- m[rownames(m)!='TreeWebs.09',colnames(m)!='TreeWebs.09']
 ms <- ms[rownames(ms)!='TreeWebs.09',colnames(ms)!='TreeWebs.09']
+                                        #significance
+r[rs > 0.1] <- 0;m[ms > 0.1] <- 0
                                         #plot
 v.col <- c(grey(0.25),rep("#662506",3),rep("#254C00",4))
 

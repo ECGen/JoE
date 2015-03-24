@@ -4,13 +4,13 @@
 ### MK Lau
 
 ###Network figs
-joePpd <- function(x){
+joePpd <- function(x,rn=FALSE){
                                         #data pre-processing
-  rownames(x) <- x[,1]
-  x <- x[,-1]
+  if (rn){rownames(x) <- x[,1];x <- x[,-1]}
   x[upper.tri(x)] <- t(x)[upper.tri(x)]
+  x <-   as.matrix(x)
   diag(x) <- 0
-  as.matrix(x)
+  return(x)
 }
 
 joePlot <- function(x,y,coord='coordinates',v.col,v.cex){
@@ -29,14 +29,14 @@ joePlot <- function(x,y,coord='coordinates',v.col,v.cex){
         vertex.col=0,vertex.cex=v.cex,vertex.border='white',
         label.bg='white',boxed.labels=TRUE,
         label.border=0,mode='circle',edge.col=e.col,
-        edge.lty=1,edge.lty.n=2)
+          edge.lty=1)
   }else{
     set.seed(0)
     coord <- gplot((x...),gmode='graph',displaylabels=FALSE,edge.lwd=e.lwd,
                    vertex.col=0,vertex.cex=v.cex,vertex.border='white',
                    label.bg='white',boxed.labels=TRUE,
                    label.border=0,mode='circle',edge.col=e.col,
-                   edge.lty=1,edge.lty.n=2)
+                   edge.lty=1)
   }
   set.seed(0)
   gplot((x..),gmode='graph',displaylabels=FALSE,edge.lwd=e.lwd,
@@ -44,14 +44,14 @@ joePlot <- function(x,y,coord='coordinates',v.col,v.cex){
         label.bg='white',boxed.labels=TRUE,
         label.border=0,mode='circle',
         edge.col='grey',new=FALSE,coord=coord,
-        edge.lty=1,edge.lty.n=2)
+        edge.lty=1)
   set.seed(0)
   gplot((x.),gmode='graph',displaylabels=FALSE,edge.lwd=e.lwd,
         vertex.col=v.col,vertex.cex=v.cex*2,vertex.border='white',
         label.bg='white',boxed.labels=TRUE,
         label.border=0,mode='circle',
         edge.col=1,new=FALSE,coord=coord,
-        edge.lty=1,edge.lty.n=2)
+        edge.lty=1)
   coord
 }
 
