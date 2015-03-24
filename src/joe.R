@@ -4,40 +4,45 @@ library(sna)
 library('RColorBrewer')
 source('../src/func_town.R')
                                         #data pre-processing
-r <- joePpd(read.csv('../data/joe_pwr_raw.csv'))[c(6,2,3,4,1,6,7,8),c(6,2,3,4,1,6,7,8)]
-rs <- joePpd(read.csv('../data/joe_pwr_raw_sig.csv'))[c(6,2,3,4,1,6,7,8),c(6,2,3,4,1,6,7,8)]
-m <- joePpd(read.csv('../data/joe_pwr_max.csv'))[c(6,2,3,4,1,6,7,8),c(6,2,3,4,1,6,7,8)]
-ms <- joePpd(read.csv('../data/joe_pwr_max_sig.csv'))[c(6,2,3,4,1,6,7,8),c(6,2,3,4,1,6,7,8)]
-r <- r[rownames(r)!='TreeWebs.09',colnames(r)!='TreeWebs.09']
-rs <- rs[rownames(rs)!='TreeWebs.09',colnames(rs)!='TreeWebs.09']
-m <- m[rownames(m)!='TreeWebs.09',colnames(m)!='TreeWebs.09']
-ms <- ms[rownames(ms)!='TreeWebs.09',colnames(ms)!='TreeWebs.09']
-                                        #significance
-r[rs > 0.1] <- 0;m[ms > 0.1] <- 0
+r <- joePpd(read.csv('../data/joe_pwr_raw.csv'))[c(5,2,3,4,1,6,7,8),c(5,2,3,4,1,6,7,8)]
+rs <- joePpd(read.csv('../data/joe_pwr_raw_sig.csv'))[c(5,2,3,4,1,6,7,8),c(5,2,3,4,1,6,7,8)]
+m <- joePpd(read.csv('../data/joe_pwr_max.csv'))[c(5,2,3,4,1,6,7,8),c(5,2,3,4,1,6,7,8)]
+ms <- joePpd(read.csv('../data/joe_pwr_max_sig.csv'))[c(5,2,3,4,1,6,7,8),c(5,2,3,4,1,6,7,8)]
+                                        #significance re-coding
+rs[rs > 0.05 & rs <= 0.1] <- 1;rs[rs <= 0.05] <- 2;rs[rs !=1 & rs != 2] <- 0
+diag(rs) <- 0
+ms[ms > 0.05 & ms <= 0.1] <- 1;ms[ms <= 0.05] <- 2;ms[ms !=1 & ms != 2] <- 0
+diag(ms) <- 0
                                         #plot
 v.col <- c(grey(0.25),rep("#662506",3),rep("#254C00",4))
 
 new.coord <- FALSE
 if (new.coord){coord <- locator(nrow(r));dput(coord,file='../data/coords.rdata')}else{
 coord <- dget(file='../data/coords.rdata')}
-coord$y[1] <- 1.27281660
-coord$x[7] <- -1.45703700
-labels <- c('Epiphytic Lichens 2010','Ectomycorrhizal Fungi 2006','Soil Bacteria 2004','Soil Fungi 2004','Twig Endophytes 2006','Leaf/Stem Modifying Arthropods 2010','Pathogens 2009','Pathogens 2010')
+coord$y[1] <- 1.27281660;coord$x[7] <- -1.45703700
+labels <- c('Epiphytic Lichens 2010','Ectomycorrhizal','Soil Bacteria 2004','Soil Fungi 2004','Twig Endophytes 2006','Leaf/Stem Modifying','Pathogens 2009','Pathogens 2010')
 ###
 pdf(file='~/projects/JoE/results/netFig2a.pdf',width=10,height=6.5)
 par(family='Times',mai=rep(0,4))
 joePlot(abs(r),rs,v.col=v.col,v.cex=1)
 text(x=c(-1.457897,-1.034757),y=c(0.0765118,1.084242),labels='Fungal Leaf',cex=1.25)
+text(x=coord$x[2],y=coord$y[2]-0.11,labels='Fungi 2006',cex=1.25)
+text(x=coord$x[6],y=coord$y[6]-0.11,labels='Arthropods 2010',cex=1.25)
 text(x=coord$x,y=coord$y,labels=labels,cex=1.25)
 legend('topleft',legend='A',bty='n',cex=2.5)
 dev.off()
+
 pdf(file='~/projects/JoE/results/netFig2b.pdf',width=10,height=6.5)
 par(family='Times',mai=rep(0,4))
 joePlot(abs(m),ms,v.col=v.col,v.cex=1)
 text(x=c(-1.457897,-1.034757),y=c(0.0765118,1.084242),labels='Fungal Leaf',cex=1.25)
+text(x=coord$x[2],y=coord$y[2]-0.11,labels='Fungi 2006',cex=1.25)
+text(x=coord$x[6],y=coord$y[6]-0.11,labels='Arthropods 2010',cex=1.25)
+text(x=coord$x,y=coord$y,labels=labels,cex=1.25)
 text(x=coord$x,y=coord$y,labels=labels,cex=1.25)
 legend('topleft',legend='B',bty='n',cex=2.5)
 dev.off()
+
 pdf(file='~/projects/JoE/results/netFig2L.pdf')
 par(family='Times',mai=rep(0,4))
 plot(1:10,pch='',xaxt='n',yaxt='n',bty='n',xlab='',ylab='')
